@@ -12,7 +12,23 @@ const months = {
   11: 'Nov',
   12: 'Dec',
 };
+
+const days = {
+  0: 'Sun',
+  1: 'Mon',
+  2: 'Tue',
+  3: 'Wed',
+  4: 'Thu',
+  5: 'Fri',
+  6: 'Sat',
+};
+
 export const getMonth = month => {
   const mon = months[month];
   return mon;
+};
+
+export const getDay = day => {
+  const res = days[day];
+  return res;
 };

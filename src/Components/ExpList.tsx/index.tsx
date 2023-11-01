@@ -1,10 +1,11 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {gStyles} from '../../Utils/GlobalStyles';
 import {getMonth} from '../../Utils/functions';
 
 const List = () => {
+  const dispatch = useDispatch();
   const expenses = useSelector(state => state?.expenses?.data);
 
   const [selectedMonth, setSelectedMonth] = useState('');
@@ -32,20 +33,17 @@ const List = () => {
         return item.expenses;
       }
     });
-
-    console.log('Current month and year --> ', selectedMonth, selectedYear);
-    console.log('====================================');
-    console.log('Filtered Data --> ', filteredData[0]);
-    console.log('====================================');
     setData(filteredData[0]?.expenses);
   };
+
   useEffect(() => {
     chnageData();
   }, [selectedMonth, selectedYear]);
 
   return (
-    <View style={{}}>
+    <View>
       <FlatList
+        extraData={expenses?.length}
         data={expenses}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -66,7 +64,9 @@ const List = () => {
               <Text
                 style={[
                   styles.text,
-                  {color: selectedMonth === item.month ? 'white' : 'black'},
+                  {
+                    color: selectedMonth === item.month ? 'white' : 'black',
+                  },
                 ]}>
                 {item.month}
               </Text>
@@ -81,13 +81,30 @@ const List = () => {
           );
         }}
       />
+
+      <View
+        style={{
+          borderBottomColor: 'black',
+          borderWidth: 0.5,
+          width: '80%',
+          marginVertical: 10,
+          alignSelf: 'center',
+        }}
+      />
       <FlatList
         data={data}
         renderItem={({item, index}) => {
           return (
-            <TouchableOpacity>
-              <Text>{item.title}</Text>
-              <Text>{item.amount}</Text>
+            <TouchableOpacity
+              style={{
+                padding: 15,
+                margin: 10,
+                borderRadius: 10,
+                borderColor: 'black',
+                borderWidth: 0.8,
+              }}>
+              <Text style={gStyles.textBlack}>{item.title}</Text>
+              <Text style={gStyles.textBlack}>{item.amount}</Text>
             </TouchableOpacity>
           );
         }}

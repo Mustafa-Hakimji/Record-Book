@@ -15,7 +15,11 @@ const StackNavigators = () => {
         initialRouteName="Home"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Add" component={AddExp} />
+        <Stack.Screen
+          name="Add"
+          component={AddExp}
+          options={{headerShown: true}}
+        />
         <Stack.Screen name="Detail" component={Detail} />
       </Stack.Navigator>
     </NavigationContainer>
