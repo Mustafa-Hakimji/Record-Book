@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {gStyles} from '../../Utils/GlobalStyles';
-import {getDay, getMonth} from '../../Utils/functions';
+import {checkAmount, getDay, getMonth} from '../../Utils/functions';
 import {useDispatch} from 'react-redux';
 import {addExpenses} from '../../Redux/Slices/Expences';
 
@@ -18,15 +18,8 @@ const AddExp = () => {
   const [amount, setAmount] = useState('');
 
   const addExpensesToList = () => {
-    console.log('====================================');
-    console.log('Add to expense function called');
-    console.log('====================================');
-
     if (!title || !amount) {
-      console.log('====================================');
-      console.log('Empty field condition');
-      console.log('====================================');
-      Alert.alert('Both fields are necessary !!');
+      Alert.alert('Both fields are required !!');
       return;
     } else {
       const d = new Date();
@@ -37,20 +30,9 @@ const AddExp = () => {
       const month = getMonth(curMonth);
       const dayStr = getDay(day);
 
-      const checkAmount = () => {
-        for (let i = 0; i < amount.length; i++) {
-          if (isNaN(Number(amount[i]))) {
-            console.log('Check Amount false condition');
-            return false;
-          }
-        }
-        return true;
-      };
-
-      const result = checkAmount();
+      const result = checkAmount(amount);
 
       if (!result) {
-        console.log('Check Amount if condition ');
         Alert.alert('Amount must be Number !!');
         return;
       }
@@ -58,7 +40,7 @@ const AddExp = () => {
       const formatAmount = Number(amount);
 
       const expenseToAdd = {
-        month: 'Nov',
+        month,
         date,
         day: dayStr,
         year,

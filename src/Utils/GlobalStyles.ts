@@ -22,6 +22,7 @@ export const gStyles = StyleSheet.create({
   rowContainerSpaceBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   button: {

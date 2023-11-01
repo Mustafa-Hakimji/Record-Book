@@ -5,6 +5,7 @@ const ExpenseSlice = createSlice({
   initialState: {
     data: [],
     loading: false,
+    totalExp: 0,
   },
   reducers: {
     addExpenses(state, action) {
@@ -38,9 +39,6 @@ const ExpenseSlice = createSlice({
           return item.expenses.push(action.payload);
         }
       });
-
-      console.log('REDUX after adding EXP --> ', JSON.stringify(state.data));
-      console.log('REDUX Length State.data --> ', state.data.length);
     },
 
     deleteExpenses(state, action) {

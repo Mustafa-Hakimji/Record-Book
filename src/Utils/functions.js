@@ -32,3 +32,12 @@ export const getDay = day => {
   const res = days[day];
   return res;
 };
+
+export const checkAmount = amount => {
+  for (let i = 0; i < amount.length; i++) {
+    if (isNaN(Number(amount[i]))) {
+      return false;
+    }
+  }
+  return true;
+};
