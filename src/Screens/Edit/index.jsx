@@ -12,7 +12,7 @@ import {checkAmount, getDay, getMonth} from '../../Utils/functions';
 import {useDispatch} from 'react-redux';
 import {addExpenses} from '../../Redux/Slices/Expences';
 
-const AddExp = () => {
+const EditExpenses = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
@@ -87,7 +87,7 @@ const AddExp = () => {
   );
 };
 
-export default AddExp;
+export default EditExpenses;
 
 const styles = StyleSheet.create({
   heading: {

@@ -4,13 +4,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import {gStyles} from '../../Utils/GlobalStyles';
 import {getMonth} from '../../Utils/functions';
 import {useRoute} from '@react-navigation/native';
+import DeleteModal from '../DeleteModal';
 
 const List = () => {
-  const dispatch = useDispatch();
   const expenses = useSelector(state => state?.expenses?.data);
 
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedYear, setSelectedYear] = useState(2023);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteData, setDeleteData] = useState({
+    item: {},
+    index: null,
+  });
 
   const handleSelections = (data: any) => {
     setSelectedMonth(data?.month);
@@ -47,9 +52,14 @@ const List = () => {
     0,
   );
 
+  const handleDeleteExpense = (item: any, index: any) => {
+    setDeleteModal(true);
+    setDeleteData({item, index});
+  };
+
   return (
     <>
-      {expenses.length > 0 ? (
+      {listData.length > 0 ? (
         <View style={{flex: 1}}>
           <FlatList
             style={{maxHeight: 50}}
@@ -60,6 +70,7 @@ const List = () => {
             renderItem={({item, index}) => {
               return (
                 <TouchableOpacity
+                  key={index}
                   style={[
                     gStyles.rowContainerSpaceBetween,
                     styles.months,
@@ -99,7 +110,7 @@ const List = () => {
             data={listData}
             renderItem={({item, index}) => {
               return (
-                <TouchableOpacity style={styles.expContainer}>
+                <TouchableOpacity key={index} style={styles.expContainer}>
                   <View>
                     <Text style={gStyles.textBlack}>
                       {item.month}{' '}
@@ -107,6 +118,7 @@ const List = () => {
                       {item.year}
                     </Text>
                     <TouchableOpacity
+                      onPress={() => handleDeleteExpense(item, index)}
                       style={[gStyles.button, styles.deleteButton]}>
                       <Text style={gStyles.textBlackWhite}>Delete</Text>
                     </TouchableOpacity>
@@ -131,6 +143,13 @@ const List = () => {
         <View style={gStyles.containerCenter}>
           <Text style={gStyles.textBlack}>No Expenses yet</Text>
         </View>
+      )}
+      {deleteModal && (
+        <DeleteModal
+          visible={deleteModal}
+          item={deleteData}
+          setVisible={setDeleteModal}
+        />
       )}
     </>
   );

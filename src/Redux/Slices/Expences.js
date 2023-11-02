@@ -23,7 +23,6 @@ const ExpenseSlice = createSlice({
       const result = isMonth();
 
       if (!result) {
-        console.log('Redux NewMonth Pushed');
         const newMonth = {
           month,
           year,
@@ -35,17 +34,29 @@ const ExpenseSlice = createSlice({
 
       state.data.filter(item => {
         if (item.month === month && item.year === year) {
-          console.log('Redux filter if condition');
           return item.expenses.push(action.payload);
         }
       });
     },
 
     deleteExpenses(state, action) {
-      const {month, year, index} = action.payload;
+      const {month, year} = action.payload.item;
+      const {index} = action.payload;
+
       state.data.filter(item => {
         if (item.month === month && item.year === year) {
           item.expenses.splice(index, 1);
+        }
+      });
+    },
+    editExpense(state, action) {
+      const {month, year} = action.payload.item;
+      const {index} = action.payload;
+
+      state.data.filter(item => {
+        if (item.month === month && item.year === year) {
+          item.expenses[index].title = title;
+          item.expenses[index].amount = amount;
         }
       });
     },
